@@ -1,7 +1,14 @@
-import React from "react";
+import { router } from "express";
+import {
+  getAllDoctors,
+  newDoctor,
+  updateDoctor,
+  deleteDoctor,
+} from "../controllers/doctor.controller.js";
 
-const router = () => {
-  return <div>router</div>;
-};
+router.route("/").get(getAllDoctors);
+router.route("/").post(newDoctor);
+router.route("/update/:id").patch(updateDoctor);
+router.route("/delete/:id").delete(deleteDoctor);
 
 export default router;
