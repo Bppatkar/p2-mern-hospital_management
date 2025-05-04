@@ -1,4 +1,5 @@
-import { router } from "express";
+import express from "express";
+const router = express.Router();
 import {
   getAllAppointments,
   createAppointment,
@@ -7,7 +8,7 @@ import {
 } from "../controllers/Appointment.controller.js";
 
 router.route("/").get(getAllAppointments);
-router.router("/add").post(createAppointment);
+router.route("/add").post(createAppointment);
 router.route("/update/:id").patch(updateAppointment);
 router.route("/delete/:id").delete(deleteAppointment);
 

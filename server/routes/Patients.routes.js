@@ -1,4 +1,5 @@
-import { router } from "express";
+import express from "express";
+const router = express.Router();
 import {
   getAllPatients,
   addPatient,
@@ -7,7 +8,7 @@ import {
 } from "../controllers/patient.controller.js";
 
 router.route("/").get(getAllPatients);
-router.router("/add").post(addPatient);
+router.route("/add").post(addPatient);
 router.route("/update/:id").patch(updatePatient);
 router.route("/delete/:id").delete(deletePatient);
 

@@ -1,4 +1,5 @@
-import { router } from "express";
+import express from "express";
+const router = express.Router();
 import {
   getAllDoctors,
   newDoctor,
