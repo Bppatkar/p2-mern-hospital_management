@@ -41,41 +41,49 @@ const AddPatient = () => {
   };
 
   return (
-    <div className="container mx-auto my-4">
-      <h2 className="text-xl font-semibold mb-4">Add New Patient</h2>
+    <div className="container mx-auto my-8 p-6 bg-white rounded-lg shadow-md">
+      <h2 className="text-2xl font-semibold mb-6 text-gray-800">
+        Add New Patient
+      </h2>
       {error && <div className="text-red-500 mb-4">{error}</div>}
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-2" htmlFor="name">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="space-y-2">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="name"
+          >
             Name
           </label>
           <input
             type="text"
             id="name"
             name="name"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             value={patientData.name}
             onChange={handleChange}
             required
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-2" htmlFor="email">
+        <div className="space-y-2">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="email"
+          >
             Email
           </label>
           <input
             type="email"
             id="email"
             name="email"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             value={patientData.email}
             onChange={handleChange}
             required
           />
         </div>
-        <div className="mb-4">
+        <div className="space-y-2">
           <label
-            className="block text-sm font-medium mb-2"
+            className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="phoneNumber"
           >
             Phone Number
@@ -84,15 +92,15 @@ const AddPatient = () => {
             type="text"
             id="phoneNumber"
             name="phoneNumber"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             value={patientData.phoneNumber}
             onChange={handleChange}
             required
           />
         </div>
-        <div className="mb-4">
+        <div className="space-y-2">
           <label
-            className="block text-sm font-medium mb-2"
+            className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="dateOfBirth"
           >
             Date of Birth
@@ -101,20 +109,23 @@ const AddPatient = () => {
             type="date"
             id="dateOfBirth"
             name="dateOfBirth"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             value={patientData.dateOfBirth}
             onChange={handleChange}
             required
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-2" htmlFor="address">
+        <div className="space-y-2">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="address"
+          >
             Address
           </label>
           <textarea
             id="address"
             name="address"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             value={patientData.address}
             onChange={handleChange}
             required
@@ -123,7 +134,7 @@ const AddPatient = () => {
         <div>
           <button
             type="submit"
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300 ease-in-out"
           >
             Add Patient
           </button>

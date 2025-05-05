@@ -66,6 +66,27 @@ export const getAllAppointments = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const getAppointment = async (req, res) => {
+  try {
+    const appointmentId = req.params.id;
+
+    // Validate ObjectId format
+    if (!mongoose.Types.ObjectId.isValid(appointmentId)) {
+      return res.status(400).json({ message: "Invalid appointment ID" });
+    }
+
+    const appointment = await Appointment.findById(appointmentId);
+
+    if (!appointment) {
+      return res.status(404).json({ message: "Appointment not found" });
+    }
+    res.status(200).json(appointment);
+  } catch (error) {
+    console.error("Error fetching appointment:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 export const createAppointment = async (req, res) => {
   const {
     patientName,

@@ -31,6 +31,27 @@ export const getAllDoctors = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const getDoctorById = async (req, res) => {
+  try {
+    const doctorId = req.params.id;
+
+    if (!mongoose.Types.ObjectId.isValid(doctorId)) {
+      return res.status(400).json({ message: "Invalid doctor ID" });
+    }
+
+    const doctor = await Doctor.findById(doctorId);
+
+    if (!doctor) {
+      return res.status(404).json({ message: "Doctor not found" });
+    }
+
+    res.status(200).json(doctor);
+  } catch (error) {
+    console.error("Error fetching doctor:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 export const newDoctor = async (req, res) => {
   try {
     const { name, email, specialization, phoneNumber, experience } = req.body;

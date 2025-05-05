@@ -24,7 +24,9 @@ const UpdatePatient = () => {
         name,
         email,
         phoneNumber,
-        dateOfBirth: dateOfBirth ? new Date(dateOfBirth).toISOString().split("T")[0] : "",
+        dateOfBirth: dateOfBirth
+          ? new Date(dateOfBirth).toISOString().split("T")[0]
+          : "",
         address,
       });
     } catch (err) {
@@ -55,14 +57,19 @@ const UpdatePatient = () => {
   };
 
   return (
-    <div className="container mx-auto my-4">
-      <h2 className="text-xl font-semibold mb-4">Update Patient</h2>
-      {error && <p className="text-red-500 mb-2">{error}</p>}
+    <div className="container mx-auto my-8 p-6 bg-white rounded-lg shadow-md">
+      <h2 className="text-2xl font-semibold mb-6 text-gray-800">
+        Update Patient
+      </h2>
+      {error && <p className="text-red-500 mb-4">{error}</p>}
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="space-y-4">
         {["name", "email", "phoneNumber", "address"].map((field) => (
-          <div key={field} className="mb-4">
-            <label htmlFor={field} className="block mb-1 capitalize">
+          <div key={field} className="space-y-2">
+            <label
+              htmlFor={field}
+              className="block text-gray-700 text-sm font-bold mb-2 capitalize"
+            >
               {field}
             </label>
             <input
@@ -72,12 +79,15 @@ const UpdatePatient = () => {
               value={formData[field]}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border rounded-md"
+              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
         ))}
-        <div className="mb-4">
-          <label htmlFor="dateOfBirth" className="block mb-1">
+        <div className="space-y-2">
+          <label
+            htmlFor="dateOfBirth"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
             Date of Birth
           </label>
           <input
@@ -87,12 +97,12 @@ const UpdatePatient = () => {
             value={formData.dateOfBirth}
             onChange={handleChange}
             required
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
         <button
           type="submit"
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+          className="bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700 transition duration-300 ease-in-out"
         >
           Update Patient
         </button>

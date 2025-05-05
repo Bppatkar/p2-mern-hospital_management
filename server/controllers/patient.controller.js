@@ -37,15 +37,11 @@ export const getPatientById = async (req, res) => {
   try {
     const patientId = req.params.id;
 
-    // Explicitly create an ObjectId instance
-    let objectId;
-    try {
-      objectId = new mongoose.Types.ObjectId(patientId);
-    } catch (error) {
+    if (!mongoose.Types.ObjectId.isValid(patientId)) {
       return res.status(400).json({ message: "Invalid patient ID format" });
     }
 
-    const patient = await Patients.findById(objectId);
+    const patient = await Patients.findById(patientId);
 
     if (!patient) {
       return res.status(404).json({ message: "Patient not found" });
