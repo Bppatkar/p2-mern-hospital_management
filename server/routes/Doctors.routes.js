@@ -8,7 +8,7 @@ import {
 } from "../controllers/doctor.controller.js";
 
 router.route("/").get(getAllDoctors);
-router.route("/").post(newDoctor);
+router.route("/add").post(newDoctor);
 router.route("/update/:id").patch(updateDoctor);
 router.route("/delete/:id").delete(deleteDoctor);
 

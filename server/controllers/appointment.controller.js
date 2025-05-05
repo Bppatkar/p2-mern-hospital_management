@@ -12,6 +12,8 @@ export const getAllAppointments = async (req, res) => {
         $lookup: {
           from: "doctors", // target collection
           localField: "doctorId", // field in Appointment
+          //localField: The field in your current collection (e.g., appointments) that holds the reference (usually an ObjectId).
+          // foreignField: The field in the other collection (e.g., doctors) that matches the value of localField.
           foreignField: "_id", // field in Doctor
           as: "doctorDetails",
         },

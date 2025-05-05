@@ -10,10 +10,12 @@ const patient_Schema = mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+      match: [/\S+@\S+\.\S+/, "Please use a valid email address"],
     },
     phoneNumber: {
       type: String,
       required: true,
+      match: [/^\d{10}$/, "Please use a valid 10-digit phone number"],
     },
     dateOfBirth: {
       type: Date,
