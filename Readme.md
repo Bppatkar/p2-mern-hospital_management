@@ -4,7 +4,11 @@ Base URL:
 
 ## Folder Structure
 
+### server
 ![image](https://github.com/user-attachments/assets/4b91816b-7b5b-41db-808c-e7defebb8eb4)
+
+### client
+![image](https://github.com/user-attachments/assets/d08ee7c4-7d87-4b64-b323-a015045e253f)
 
 
 
