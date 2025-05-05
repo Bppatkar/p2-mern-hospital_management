@@ -1,4 +1,4 @@
-export const getAllPatients = async () => {};
-export const addPatient = async () => {};
-export const updatePatient = async () => {};
-export const deletePatient = async () => {};
+export const getAllPatients = async (req, res) => {};
+export const addPatient = async (req, res) => {};
+export const updatePatient = async (req, res) => {};
+export const deletePatient = async (req, res) => {};
