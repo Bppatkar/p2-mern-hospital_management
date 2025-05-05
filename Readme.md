@@ -80,7 +80,11 @@ This document provides a guide for testing the Patient, Doctor, and Appointment 
 
     ```json
     {
-        "phoneNumber": "1234567890"
+        "name": "maria lofte crow",
+        "email": "mariaLofteUAE@yahoo.com",
+        "phoneNumber": "9888111555",
+        "dateOfBirth": "1992-11-01",
+        "address": "SWE"
     }
     ```
 7.  Click **Send**.
@@ -122,7 +126,8 @@ The testing process for the Doctors routes is very similar to the Patients route
         "name": "Dr. Smith",
         "email": "drsmith@example.com",
         "phoneNumber": "9123456789",
-        "specialization": "Cardiologist"
+        "specialization": "Cardiologist",
+        "experience" : 1
     }
     ```
 
@@ -134,7 +139,11 @@ The testing process for the Doctors routes is very similar to the Patients route
 
     ```json
     {
-        "specialization": "Neurologist"
+        "name": "Dr. Smith jha",
+        "email": "drsmithjha@example.com",
+        "phoneNumber": "9128955555",
+        "specialization": "Cardiologist",
+        "experience" : 5
     }
     ```
 
@@ -160,10 +169,14 @@ Follow the same pattern for testing the Appointments routes, replacing `/patient
 
     ```json
     {
-        "patientId": "66375797b4c0fce98dfc78f4",
-        "doctorId": "663756e6b4c0fce98dfc78f1",
-        "appointmentDate": "2025-05-06T10:00:00Z",
-        "description": "Routine checkup"
+        "patientName": "maria lofte crow",
+        "doctorName": "Dr. Smith jha",
+        "appointmentDate": "2025-05-07",
+        "appointmentTime": "14:30",
+        "appointmentType": "consultation",
+        "doctorId": "68187a0f7aa72cf543209b15",
+        "patientId": "681877787aa72cf543209b0b",
+        "prescription": "Check blood pressure"
     }
     ```
 
@@ -177,7 +190,10 @@ Follow the same pattern for testing the Appointments routes, replacing `/patient
 
     ```json
     {
-        "description": "Follow-up consultation"
+        "appointmentDate": "2025-05-12",
+        "appointmentTime": "14:30",
+        "appointmentType": "video",
+        "prescription": "normal checkup"
     }
     ```
 
