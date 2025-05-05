@@ -5,7 +5,7 @@ import {
   createAppointment,
   updateAppointment,
   deleteAppointment,
-} from "../controllers/Appointment.controller.js";
+} from "../controllers/appointment.controller.js";
 
 router.route("/").get(getAllAppointments);
 router.route("/add").post(createAppointment);

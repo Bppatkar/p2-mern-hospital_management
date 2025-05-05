@@ -1,20 +1,76 @@
 import mongoose from "mongoose";
 import Appointment from "../model/appointment.schema.js";
 
+// ===============================
+// GET: Fetch All Appointments
+// ===============================
 export const getAllAppointments = async (req, res) => {
   try {
-    const appointments = await Appointment.find()
-      .populate("doctorId", "name")
-      .populate("patientId", "name");
-    if (!appointments || appointments.length === 0) {
+    const appointments = await Appointment.aggregate([
+      // Lookup doctor details using doctorId from Appointment collection
+      {
+        $lookup: {
+          from: "doctors", // target collection
+          localField: "doctorId", // field in Appointment
+          foreignField: "_id", // field in Doctor
+          as: "doctorDetails",
+        },
+      },
+      // Flatten doctorDetails array to a single object
+      { $unwind: "$doctorDetails" },
+
+      // Lookup patient details using patientId
+      {
+        $lookup: {
+          from: "patients",
+          localField: "patientId",
+          foreignField: "_id",
+          as: "patientDetails",
+        },
+      },
+      // Flatten patientDetails array
+      { $unwind: "$patientDetails" },
+
+      // Select only required fields to return in response
+      {
+        $project: {
+          patientName: 1,
+          doctorName: 1,
+          appointmentDate: 1,
+          appointmentTime: 1,
+          status: 1,
+          appointmentType: 1,
+          prescription: 1,
+          createdAt: 1,
+          updatedAt: 1,
+          doctorDetails: {
+            name: 1,
+            _id: 1,
+          },
+          patientDetails: {
+            name: 1,
+            _id: 1,
+          },
+        },
+      },
+    ]);
+
+    // No appointments found
+    if (!appointments.length) {
       return res.status(404).json({ message: "No appointments found" });
     }
+
+    // Success
     res.status(200).json(appointments);
   } catch (error) {
     console.error("Error fetching appointments:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+// ===============================
+// POST: Create New Appointment
+// ===============================
 export const createAppointment = async (req, res) => {
   const {
     patientName,
@@ -27,6 +83,8 @@ export const createAppointment = async (req, res) => {
     patientId,
     appointmentType,
   } = req.body;
+
+  // Check for required fields
   if (
     !patientName ||
     !doctorName ||
@@ -41,27 +99,29 @@ export const createAppointment = async (req, res) => {
     return res.status(400).json({ message: "All fields are required" });
   }
 
-  // check if date is in the past
+  // Disallow past appointments
   if (new Date(appointmentDate) < new Date()) {
     return res
       .status(400)
       .json({ message: "Appointment date cannot be in the past" });
   }
+
   try {
-    // checking if the appointment already exists
-    const existingAppointment = await Appointment.findone({
+    // Check for existing appointment at same time with same doctor and patient
+    const existingAppointment = await Appointment.findOne({
       appointmentDate,
       appointmentTime,
       doctorId,
       patientId,
     });
+
     if (existingAppointment) {
       return res.status(400).json({
         message: "Appointment already exists for this date and time",
       });
     }
 
-    // creating a new appointment
+    // Create new appointment
     const newAppointment = new Appointment({
       patientName,
       doctorName,
@@ -73,6 +133,7 @@ export const createAppointment = async (req, res) => {
       patientId,
       appointmentType,
     });
+
     await newAppointment.save();
     res.status(201).json(newAppointment);
   } catch (error) {
@@ -80,6 +141,10 @@ export const createAppointment = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+// ===============================
+// PUT: Update Appointment
+// ===============================
 export const updateAppointment = async (req, res) => {
   try {
     const appointmentId = req.params.id;
@@ -89,38 +154,39 @@ export const updateAppointment = async (req, res) => {
       status,
       prescription,
       appointmentType,
-      ...rest // Captures unwanted fields (e.g., doctorId, patientId)
+      ...rest // Restrict fields like doctorId and patientId from being updated
     } = req.body;
 
-    // Prevent updating restricted fields (e.g., doctorId, patientId)
+    // Prevent updating restricted fields
     if (Object.keys(rest).length > 0) {
       return res
         .status(400)
         .json({ message: "Cannot update restricted fields" });
     }
 
-    // Fetch the existing appointment first (needed for duplicate checks)
+    // Check if appointment exists
     const existingAppointment = await Appointment.findById(appointmentId);
     if (!existingAppointment) {
       return res.status(404).json({ message: "Appointment not found" });
     }
 
-    // Validate appointment date (if being updated)
+    // Disallow updating to past dates
     if (appointmentDate && new Date(appointmentDate) < new Date()) {
       return res
         .status(400)
         .json({ message: "Appointment date cannot be in the past" });
     }
 
-    // Check for duplicate appointments (if date/time is updated)
+    // Check for duplicate/conflicting appointment if date/time is changed
     if (appointmentDate || appointmentTime) {
       const conflictingAppointment = await Appointment.findOne({
-        doctorId: existingAppointment.doctorId, // Use the existing appointment's doctorId
-        patientId: existingAppointment.patientId, // Use the existing appointment's patientId
+        doctorId: existingAppointment.doctorId,
+        patientId: existingAppointment.patientId,
         appointmentDate: appointmentDate || existingAppointment.appointmentDate,
         appointmentTime: appointmentTime || existingAppointment.appointmentTime,
-        _id: { $ne: appointmentId }, // Exclude current appointment [the $ne operator selects documents where the value of a specified field is not equal to a specified value.]
+        _id: { $ne: appointmentId }, // Exclude the current appointment
       });
+
       if (conflictingAppointment) {
         return res.status(409).json({
           message: "Another appointment already exists at this time",
@@ -139,8 +205,8 @@ export const updateAppointment = async (req, res) => {
         appointmentType,
       },
       {
-        new: true, // Return the updated document
-        runValidators: true, // Ensure schema validations run
+        new: true,
+        runValidators: true,
       }
     );
 
@@ -150,11 +216,15 @@ export const updateAppointment = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+// ===============================
+// DELETE: Delete Appointment
+// ===============================
 export const deleteAppointment = async (req, res) => {
   try {
     const appointmentId = req.params.id;
 
-    // validate appointment ID format (to prevent CastError)
+    // Validate ObjectId format
     if (!mongoose.Types.ObjectId.isValid(appointmentId)) {
       return res.status(400).json({ message: "Invalid appointment ID" });
     }
@@ -162,19 +232,20 @@ export const deleteAppointment = async (req, res) => {
     const deletedAppointment = await Appointment.findByIdAndDelete(
       appointmentId
     );
+
     if (!deletedAppointment) {
       return res.status(404).json({ message: "Appointment not found" });
     }
-    // Return minimal success response (consider logging instead of returning full data)
+
     res.status(200).json({
       success: true,
       message: "Appointment deleted successfully",
-      deletedId: appointmentId, // Optional: return deleted ID for reference
+      deletedId: appointmentId,
     });
   } catch (error) {
     console.error("Error deleting appointment:", error);
 
-    // More specific error handling
+    // Handle MongoDB CastError separately
     if (error.name === "CastError") {
       return res.status(400).json({ message: "Invalid appointment ID format" });
     }
