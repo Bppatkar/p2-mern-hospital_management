@@ -40,7 +40,7 @@ const appointment_Schema = mongoose.Schema(
     },
     appointmentType: {
       type: String,
-      enum: ["in-person", "virtual"],
+      enum: ["in-person", "video", "consultation"],
       required: true,
     },
   },
