@@ -1,9 +1,6 @@
 import mongoose from "mongoose";
-import Appointment from "../model/appointment.schema.js";
+import Appointment from "../model/Appointment.model.js";
 
-// ===============================
-// GET: Fetch All Appointments
-// ===============================
 export const getAllAppointments = async (req, res) => {
   try {
     const appointments = await Appointment.aggregate([
@@ -69,10 +66,6 @@ export const getAllAppointments = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
-// ===============================
-// POST: Create New Appointment
-// ===============================
 export const createAppointment = async (req, res) => {
   const {
     patientName,
@@ -143,10 +136,6 @@ export const createAppointment = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
-// ===============================
-// PUT: Update Appointment
-// ===============================
 export const updateAppointment = async (req, res) => {
   try {
     const appointmentId = req.params.id;
@@ -218,10 +207,6 @@ export const updateAppointment = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
-// ===============================
-// DELETE: Delete Appointment
-// ===============================
 export const deleteAppointment = async (req, res) => {
   try {
     const appointmentId = req.params.id;

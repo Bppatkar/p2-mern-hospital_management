@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Patients from "../model/patient.schema.js";
+import Patients from "../model/Patient.model.js";
 
 export const getAllPatients = async (req, res) => {
   try {

@@ -9,7 +9,7 @@ const corsOptions = {
   origin: process.env.CORS_ORIGIN,
   methods: ["GET", "POST", "PUT", "DELETE"],
   samesite: true,
-  Credentials: true,
+  credentials: true,
   optionsSuccessStatus: 200,
 };
 
@@ -23,9 +23,9 @@ import doctorsRouter from "./routes/Doctors.routes.js";
 import appointmentRouter from "./routes/Appointment.routes.js";
 
 // routes
-app.use("/api/v1", patientsRouter);
-app.use("/api/v1", doctorsRouter);
-app.use("/api/v1", appointmentRouter);
+app.use("/api/v1/patients", patientsRouter);
+app.use("/api/v1/doctors", doctorsRouter);
+app.use("/api/v1/appointments", appointmentRouter);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
