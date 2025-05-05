@@ -6,8 +6,8 @@ import connectDB from "./db/db.js";
 dotenv.config();
 
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN,
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: process.env.FRONTEND_FOR_CORS,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   samesite: true,
   credentials: true,
   optionsSuccessStatus: 200,

@@ -32,6 +32,30 @@ export const getAllPatients = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const getPatientById = async (req, res) => {
+  try {
+    const patientId = req.params.id;
+
+    // Explicitly create an ObjectId instance
+    let objectId;
+    try {
+      objectId = new mongoose.Types.ObjectId(patientId);
+    } catch (error) {
+      return res.status(400).json({ message: "Invalid patient ID format" });
+    }
+
+    const patient = await Patients.findById(objectId);
+
+    if (!patient) {
+      return res.status(404).json({ message: "Patient not found" });
+    }
+    res.status(200).json(patient);
+  } catch (error) {
+    console.error("Error fetching patient:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 export const addPatient = async (req, res) => {
   try {
     const { name, email, phoneNumber, dateOfBirth, address } = req.body;
