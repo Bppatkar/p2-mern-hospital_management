@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import AppointmentList from "../components/Appointment/AppointmentList";
 
-const AppointmentPage = () => {
+const AppointmentsPage = () => {
   return (
-    <div>AppointmentPage</div>
-  )
-}
+    <div className="container mx-auto px-4 py-6">
+      <AppointmentList />
+    </div>
+  );
+};
 
-export default AppointmentPage
+export default AppointmentsPage;

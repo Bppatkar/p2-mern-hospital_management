@@ -22,6 +22,7 @@ const AddDoctor = () => {
         `${import.meta.env.VITE_BACKEND_BASE_URL}/doctors/add`,
         formData
       );
+      // console.log("Doctor added successfully:", formData);
       navigate("/doctors");
     } catch (err) {
       setError("Failed to add doctor. Try again.");
@@ -33,22 +34,24 @@ const AddDoctor = () => {
       <h2 className="text-2xl font-semibold mb-6 text-gray-800">Add Doctor</h2>
       {error && <p className="text-red-500">{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">
-        {["name", "email", "specialization", "phoneNumber"].map((field) => (
-          <div key={field} className="space-y-2">
-            <label htmlFor={field} className="block font-medium capitalize">
-              {field}
-            </label>
-            <input
-              type="text"
-              name={field}
-              id={field}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
-              value={formData[field]}
-              onChange={handleChange}
-            />
-          </div>
-        ))}
+        {["name", "email", "specialization", "phoneNumber", "experience"].map(
+          (field) => (
+            <div key={field} className="space-y-2">
+              <label htmlFor={field} className="block font-medium capitalize">
+                {field}
+              </label>
+              <input
+                type="text"
+                name={field}
+                id={field}
+                required
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
+                value={formData[field]}
+                onChange={handleChange}
+              />
+            </div>
+          )
+        )}
         <button
           type="submit"
           className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"

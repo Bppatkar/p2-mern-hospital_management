@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import Appointment from "../model/Appointment.model.js";
+import Doctor from "../model/Doctor.model.js";
+import Patient from "../model/Patient.model.js";
 
 export const getAllAppointments = async (req, res) => {
   try {
@@ -136,11 +138,16 @@ export const createAppointment = async (req, res) => {
         message: "Appointment already exists for this date and time",
       });
     }
+    const patient = await Patient.findById(patientId);
+    const doctor = await Doctor.findById(doctorId);
 
+    if (!patient || !doctor) {
+      return res.status(400).json({ message: "Invalid patient or doctor ID" });
+    }
     // Create new appointment
     const newAppointment = new Appointment({
-      patientName,
-      doctorName,
+      patientName: patient.name,
+      doctorName: doctor.name,
       appointmentDate,
       appointmentTime,
       status,

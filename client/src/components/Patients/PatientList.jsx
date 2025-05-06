@@ -14,6 +14,7 @@ const PatientList = () => {
       const response = await axios.get(
         `${import.meta.env.VITE_BACKEND_BASE_URL}/patients`
       );
+      // console.log("API response:", response);
       setPatients(response.data);
     } catch (error) {
       setError(error.message);
@@ -27,7 +28,6 @@ const PatientList = () => {
         await axios.delete(
           `${import.meta.env.VITE_BACKEND_BASE_URL}/patients/delete/${id}`
         );
-        // Re-fetch patients after successful deletion
         fetchPatients();
       } catch (err) {
         setError(err.response?.data?.message || "Failed to delete patient.");
@@ -41,7 +41,9 @@ const PatientList = () => {
 
   return (
     <div className="container mx-auto my-8">
-      <h2 className="text-2xl font-semibold mb-6 text-gray-800">Patient List</h2>
+      <h2 className="text-2xl font-semibold mb-6 text-gray-800">
+        Patient List
+      </h2>
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
@@ -91,10 +93,10 @@ const PatientList = () => {
                       {patient.phoneNumber}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-gray-800">
-                      {new Date(patient.dateOfBirth).toLocaleDateString()}
+                      {patient.dateOfBirth ? new Date(patient.dateOfBirth).toLocaleDateString() : 'N/A'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-gray-800">
-                      {patient.address}
+                      {patient.address || 'N/A'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-center space-x-2">
                       <Link
