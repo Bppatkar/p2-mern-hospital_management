@@ -16,25 +16,28 @@ const UpdateAppointment = lazy(() => import("./components/Appointment/UpdateAppo
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Suspense fallback={<div>Loading...</div>}><Home /></Suspense>} />
-        {/* Patient Routes */}
-        <Route path="patients" element={<Suspense fallback={<div>Loading...</div>}><PatientsPage /></Suspense>} />
-        <Route path="patients/add" element={<Suspense fallback={<div>Loading...</div>}><AddPatient /></Suspense>} />
-        <Route path="patients/update/:id" element={<Suspense fallback={<div>Loading...</div>}><UpdatePatient /></Suspense>} />
+    <div className="bg-gray-100 h-screen">
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Suspense fallback={<div className="text-center text-3xl">Loading...</div>}><Home /></Suspense>} />
+          
+          {/* Patient Routes */}
+          <Route path="patients" element={<Suspense fallback={<div className="text-center text-3xl">Loading...</div>}><PatientsPage /></Suspense>} />
+          <Route path="patients/add" element={<Suspense fallback={<div className="text-center text-3xl">Loading...</div>}><AddPatient /></Suspense>} />
+          <Route path="patients/update/:id" element={<Suspense fallback={<div className="text-center text-3xl">Loading...</div>}><UpdatePatient /></Suspense>} />
 
-        {/* Doctor Routes */}
-        <Route path="doctors" element={<Suspense fallback={<div>Loading...</div>}><DoctorsPage /></Suspense>} />
-        <Route path="doctors/add" element={<Suspense fallback={<div>Loading...</div>}><AddDoctor /></Suspense>} />
-        <Route path="doctors/update/:id" element={<Suspense fallback={<div>Loading...</div>}><UpdateDoctor /></Suspense>} />
+          {/* Doctor Routes */}
+          <Route path="doctors" element={<Suspense fallback={<div className="text-center text-3xl">Loading...</div>}><DoctorsPage /></Suspense>} />
+          <Route path="doctors/add" element={<Suspense fallback={<div className="text-center text-3xl">Loading...</div>}><AddDoctor /></Suspense>} />
+          <Route path="doctors/update/:id" element={<Suspense fallback={<div className="text-center text-3xl">Loading...</div>}><UpdateDoctor /></Suspense>} />
 
-        {/* Appointment Routes */}
-        <Route path="appointments" element={<Suspense fallback={<div>Loading...</div>}><AppointmentsPage /></Suspense>} />
-        <Route path="appointments/add" element={<Suspense fallback={<div>Loading...</div>}><AddAppointment /></Suspense>} />
-        <Route path="appointments/update/:id" element={<Suspense fallback={<div>Loading...</div>}><UpdateAppointment /></Suspense>} />
-      </Route>
-    </Routes>
+          {/* Appointment Routes */}
+          <Route path="appointments" element={<Suspense fallback={<div className="text-center text-3xl">Loading...</div>}><AppointmentsPage /></Suspense>} />
+          <Route path="appointments/add" element={<Suspense fallback={<div className="text-center text-3xl">Loading...</div>}><AddAppointment /></Suspense>} />
+          <Route path="appointments/update/:id" element={<Suspense fallback={<div className="text-center text-3xl">Loading...</div>}><UpdateAppointment /></Suspense>} />
+        </Route>
+      </Routes>
+    </div>
   );
 }
 

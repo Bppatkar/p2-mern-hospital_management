@@ -35,18 +35,32 @@ const DoctorList = () => {
   }, []);
 
   return (
-    <div className="container mx-auto my-8">
-      <h2 className="text-2xl font-semibold mb-6 text-gray-800">Doctor List</h2>
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold text-gray-800">Doctors</h1>
+        <Link
+          to="/doctors/add"
+          className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-md"
+        >
+          Add Doctor
+        </Link>
+      </div>
+      
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white rounded shadow">
           <thead className="bg-gray-100">
             <tr>
-              {["Name", "Email", "Specialization", "Phone", "Actions"].map((h) => (
-                <th key={h} className="px-6 py-3 text-left text-sm font-semibold text-gray-600">
-                  {h}
-                </th>
-              ))}
+              {["Name", "Email", "Specialization", "Phone", "Actions"].map(
+                (h) => (
+                  <th
+                    key={h}
+                    className="px-6 py-3 text-left text-sm font-semibold text-gray-600"
+                  >
+                    {h}
+                  </th>
+                )
+              )}
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
@@ -88,3 +102,4 @@ const DoctorList = () => {
 };
 
 export default DoctorList;
+

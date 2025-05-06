@@ -97,8 +97,8 @@ const AddAppointment = () => {
   }
 
   return (
-    <div className="max-w-lg mx-auto mt-10 p-4 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-semibold mb-6 text-gray-800">
+    <div className="max-w-2xl mx-auto mt-12 p-8 bg-white/20 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-50">
+      <h2 className="text-3xl font-semibold text-center mb-8 text-gray-900 drop-shadow">
         Add New Appointment
       </h2>
 
@@ -106,13 +106,13 @@ const AddAppointment = () => {
         <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">{error}</div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Patient
           </label>
           <select
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-3 rounded-xl bg-white/60 backdrop-blur border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
             value={formData.patientId}
             onChange={handleChange}
             name="patientId"
@@ -121,7 +121,7 @@ const AddAppointment = () => {
             <option value="">Select Patient</option>
             {patients.map((p) => (
               <option key={p._id} value={p._id}>
-                {p.name} {/* Display patient.name */}
+                {p.name}
               </option>
             ))}
           </select>
@@ -132,7 +132,7 @@ const AddAppointment = () => {
             Doctor
           </label>
           <select
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-3 rounded-xl bg-white/60 backdrop-blur border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
             value={formData.doctorId}
             onChange={handleChange}
             name="doctorId"
@@ -141,7 +141,7 @@ const AddAppointment = () => {
             <option value="">Select Doctor</option>
             {doctors.map((d) => (
               <option key={d._id} value={d._id}>
-                 {d.name}
+                {d.name}
               </option>
             ))}
           </select>
@@ -154,7 +154,7 @@ const AddAppointment = () => {
             </label>
             <input
               type="date"
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-3 rounded-xl bg-white/60 backdrop-blur border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
               value={formData.appointmentDate}
               onChange={handleChange}
               name="appointmentDate"
@@ -167,7 +167,7 @@ const AddAppointment = () => {
             </label>
             <input
               type="time"
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-3 rounded-xl bg-white/60 backdrop-blur border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
               value={formData.appointmentTime}
               onChange={handleChange}
               name="appointmentTime"
@@ -181,7 +181,7 @@ const AddAppointment = () => {
             Appointment Type
           </label>
           <select
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-3 rounded-xl bg-white/60 backdrop-blur border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
             value={formData.appointmentType}
             onChange={handleChange}
             name="appointmentType"
@@ -195,10 +195,10 @@ const AddAppointment = () => {
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Prescription/Notes
+            Prescription / Notes
           </label>
           <textarea
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-3 rounded-xl bg-white/60 backdrop-blur border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
             rows="3"
             value={formData.prescription}
             onChange={handleChange}
@@ -207,17 +207,17 @@ const AddAppointment = () => {
           />
         </div>
 
-        <div className="flex justify-end space-x-3">
+        <div className="flex justify-end space-x-4 pt-2">
           <button
             type="button"
             onClick={() => navigate("/appointments")}
-            className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400"
+            className="px-5 py-2 bg-gray-300 text-gray-800 rounded-xl hover:bg-gray-400 transition-all duration-200"
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-blue-300"
+            className="px-5 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 disabled:bg-blue-300 transition-all duration-200"
             disabled={loading}
           >
             {loading ? "Creating..." : "Create Appointment"}
