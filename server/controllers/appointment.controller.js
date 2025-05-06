@@ -190,11 +190,11 @@ export const updateAppointment = async (req, res) => {
         .json({ message: "Appointment date cannot be in the past" });
     }
 
-    // Check for duplicate/conflicting appointment if date/time is changed
-    if (appointmentDate || appointmentTime) {
+    // Check for duplicate/conflicting appointment if date/time or doctor/patient is changed
+    if (appointmentDate || appointmentTime || doctorId || patientId) {
       const conflictingAppointment = await Appointment.findOne({
-        doctorId: existingAppointment.doctorId,
-        patientId: existingAppointment.patientId,
+        doctorId: doctorId || existingAppointment.doctorId,
+        patientId: patientId || existingAppointment.patientId,
         appointmentDate: appointmentDate || existingAppointment.appointmentDate,
         appointmentTime: appointmentTime || existingAppointment.appointmentTime,
         _id: { $ne: appointmentId }, // Exclude the current appointment

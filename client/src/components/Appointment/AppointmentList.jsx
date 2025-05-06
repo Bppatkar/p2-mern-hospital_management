@@ -7,24 +7,34 @@ const AppointmentList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const fetchAppointments = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_BASE_URL}/appointments`
+      );
+      setAppointments(res?.data || []);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to load appointments.");
+      console.error("Error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchAppointments = async () => {
-      try {
-        setLoading(true);
-        const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_BASE_URL}/appointments`
-        );
-        // console.log("appointments list response:", res.data);
-        setAppointments(res?.data || []);
-      } catch (err) {
-        setError(err.response?.data?.message || "Failed to load appointments.");
-        console.error("Error:", err);
-      } finally {
-        setLoading(false);
-      }
+    fetchAppointments(); // Fetch appointments on initial mount
+
+    const handleFocus = () => {
+      fetchAppointments(); // Re-fetch when the window gains focus (user navigates back)
     };
-    fetchAppointments();
-  }, []);
+
+    window.addEventListener("focus", handleFocus);
+
+    return () => {
+      window.removeEventListener("focus", handleFocus); // Clean up the event listener
+    };
+  }, []); // Empty dependency array ensures this runs only once on mount and unmount
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this appointment?"))
@@ -103,7 +113,8 @@ const AppointmentList = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900">
-                      {appointment.doctorName}
+                      {appointment.doctorDetails?.name ||
+                        appointment.doctorName}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
