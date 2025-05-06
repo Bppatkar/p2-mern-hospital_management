@@ -85,7 +85,7 @@ const UpdateAppointment = () => {
         status: formData.status,
       };
 
-      await axios.put(
+      await axios.patch(
         `${import.meta.env.VITE_BACKEND_BASE_URL}/appointments/update/${id}`,
         appointmentData
       );

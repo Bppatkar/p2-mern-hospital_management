@@ -173,15 +173,9 @@ export const updateAppointment = async (req, res) => {
       status,
       prescription,
       appointmentType,
-      ...rest // Restrict fields like doctorId and patientId from being updated
+      patientId,
+      doctorId,
     } = req.body;
-
-    // Prevent updating restricted fields
-    if (Object.keys(rest).length > 0) {
-      return res
-        .status(400)
-        .json({ message: "Cannot update restricted fields" });
-    }
 
     // Check if appointment exists
     const existingAppointment = await Appointment.findById(appointmentId);
@@ -222,6 +216,8 @@ export const updateAppointment = async (req, res) => {
         status,
         prescription,
         appointmentType,
+        patientId,
+        doctorId,
       },
       {
         new: true,
