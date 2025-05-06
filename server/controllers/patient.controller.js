@@ -19,6 +19,8 @@ export const getAllPatients = async (req, res) => {
           email: 1, // Include email
           phoneNumber: 1, // Include phone number
           appointments: 1, // Include appointments (already linked)
+          dateOfBirth: 1,
+          address: 1,
         },
       },
     ]);
