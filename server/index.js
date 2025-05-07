@@ -5,31 +5,8 @@ import dotenv from "dotenv";
 import connectDB from "./db/db.js";
 dotenv.config();
 
-const allowedOrigins = [
-  "https://p1-stock-market-mern.vercel.app",
-  /\.vercel\.app$/, // Allows all Vercel preview deployments
-  "https://p2-mern-hospital-management.vercel.app",
-];
-
 const corsOptions = {
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-
-    // Check if the origin matches any allowed pattern
-    if (
-      allowedOrigins.some((pattern) => {
-        return typeof pattern === "string"
-          ? origin === pattern
-          : pattern.test(origin);
-      })
-    ) {
-      return callback(null, true);
-    }
-
-    callback(new Error("Not allowed by CORS"));
-  },
-
+  origin: process.env.FRONTEND_FOR_CORS,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   samesite: true,
   credentials: true,
