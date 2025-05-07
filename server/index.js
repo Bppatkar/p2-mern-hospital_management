@@ -8,7 +8,7 @@ dotenv.config();
 const allowedOrigins = [
   "https://p1-stock-market-mern.vercel.app",
   /\.vercel\.app$/, // Allows all Vercel preview deployments
-  "http://localhost:5173", // For local development
+  "https://p2-mern-hospital-management.vercel.app",
 ];
 
 const corsOptions = {
